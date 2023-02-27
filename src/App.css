@@ -23,3 +23,9 @@
 .listItemId{
   color: red;
 }
+
+.errorField {
+  color: red;
+  font-weight: bold;
+  font-size: 12px;
+}

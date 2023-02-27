@@ -31,9 +31,8 @@ const baseURL = 'https://oiw.outsystemscloud.com/Safely/rest/HealthAndSafety/'
 // Basic Auth:
  Axios.defaults.auth= {username:`${process.env.REACT_APP_USERNAME_API}`, password:`${process.env.REACT_APP_PASSWORD_API}`};
 
-export const callAPI = async (method:string, url: string, params?: any) => { 
+export const callAPI = async (method:string, url: string, data?: any) => { 
   try {
-    
     const resp: AxiosResponse = await Axios({
       method:method,
       baseURL: baseURL,
@@ -41,12 +40,10 @@ export const callAPI = async (method:string, url: string, params?: any) => {
       headers: {
           'content-type':'application/json',
       },
-      // 'params': {
-      //     'search':'parameter',
-      // },
+      data: data,
     })
     return Promise.resolve(resp.data);
-  } catch (err){
+  } catch (err) {
     handleErr(err);
   }
 }

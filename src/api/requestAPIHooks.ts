@@ -9,11 +9,10 @@ export const useRequestAPIHooks = () => {
     const USERS = 'GetUsers';
 
     return {
-        // createIncident: () => callApi((status, role), config),
+        createIncident: (body:any) => callAPI('POST',INCIDENTS,body),
+        updateIncident: (body:any) => callAPI('PUT',INCIDENTS,body),
         getIncidents: () => callAPI('GET', INCIDENTS),
         getEnums:()=>callAPI('GET', ENUMS),
         getUsers:()=>callAPI('GET', USERS),
     };
   };    
-
-  

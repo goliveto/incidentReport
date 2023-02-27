@@ -3,72 +3,80 @@ import { DialogContent,DialogActions, DialogTrigger, Button, DialogBody, DialogT
 import { Formik, Form, FormikProps } from 'formik'
 import CreateIncidentFields from './CreateIncidentFields';
 import * as Yup from 'yup';
+import { registerIncidentSchema } from './validationSchema';
+import { useRequestAPIHooks } from '../api/requestAPIHooks';
+import { navigateHome } from '../RoutesApp';
 
 export type RegisterIncident = {
-  personsInvolved: string;
-  incidentTime: Date;
-  location: string;
-  incidentType: string;
-  injuryType: string;
-  treatmentType: string;
-  description: string;
-  assignedTo: number | undefined;
-  incidentStatus: number | undefined;
-  timeOffInDays: number | undefined;
-  reportedBy: number | undefined;
-  stopFromHappening: string;
-  cause: string;
+  PersonInvolved: string;
+  IncidentDate: Date;
+  Location: string;
+  IncidentType?: number;
+  InjuryType: string;
+  TreatmentType: string;
+  Description: string;
+  AssignedTo?: number ;
+  IncidentStatus?: number;
+  TimeOffInDays?: number ;
+  ReportedBy?: number ;
+  HowToStop: string;
+  PrimaryCause: string;
+  OtherTreatmentType: string;
+  OtherInjuryType: string;
 };
 
 const initialValues: RegisterIncident = {
-  personsInvolved: '',
-  location: '',
-  incidentType: '',
-  injuryType: '',
-  treatmentType: '',
-  description: '',
-  incidentTime: new Date(), 
-  assignedTo: undefined,
-  incidentStatus: undefined,
-  timeOffInDays: undefined,
-  reportedBy: undefined,
-  stopFromHappening: '',
-  cause: ''
+  PersonInvolved: '',
+  Location: '',
+  Description: '',
+  IncidentDate: new Date(), 
+  TreatmentType: '3',
+  InjuryType:'1',
+  IncidentStatus:2,
+  IncidentType:3,
+  HowToStop: '',
+  PrimaryCause: '',
+  OtherTreatmentType:'',
+  OtherInjuryType: ''
 }
 
 
 const CreateIncidentPage: React.FC = () => {
   
-  return ( <DialogBody>
-      <DialogTitle>Report New Incident</DialogTitle>
-      <DialogContent>
-        <Formik<RegisterIncident>
+  const {createIncident} = useRequestAPIHooks();
+
+  const handleSubmit = (values: RegisterIncident) => {
+    console.log('SubmitForm '+ JSON.stringify(values)); 
+    createIncident(values)
+      .then(ret=>{console.log('Create incident Succesfull'+ JSON.stringify(ret)); navigateHome();} )
+      .catch(err => (console.log('Was an error to register an incident'+ JSON.stringify(err))) );
+  }
+
+  
+  return ( 
+      <Formik<RegisterIncident>
             initialValues={initialValues}
-            onSubmit={() => {alert('submit')}}
-            validationSchema={ Yup.object({
-                personsInvolved: Yup.string()
-                  .required('Required'),
-                assignedTo: Yup.string()
-                  .required('Required')                
-              })
-            }
+            onSubmit={handleSubmit}
+            validationSchema={registerIncidentSchema}
             validateOnBlur
         >
-          { (props: FormikProps<any>) => (
-            <Form id={'createIncidentForm'}>
-              <CreateIncidentFields />
-            </Form>)
-          }
-        </Formik>
-
-      </DialogContent>
-      <DialogActions>
-        <DialogTrigger disableButtonEnhancement>
-          <Button appearance="secondary">Close</Button>
-      </DialogTrigger>
-      <Button appearance="primary">Create</Button>
-      </DialogActions>
-    </DialogBody>
+          { (props:FormikProps<any>) => (
+            <Form>
+              <DialogBody>
+                <DialogTitle>Report New Incident</DialogTitle>
+                <DialogContent>
+                  <CreateIncidentFields />
+                </DialogContent>
+                <DialogActions>
+                  <DialogTrigger disableButtonEnhancement>
+                    <Button appearance="secondary">Close</Button>
+                  </DialogTrigger>
+                  <Button appearance="primary" onClick={()=>props.handleSubmit()}>Create</Button>
+                </DialogActions>
+              </DialogBody>
+            </Form>
+          )}
+    </Formik>
   )
 
 }

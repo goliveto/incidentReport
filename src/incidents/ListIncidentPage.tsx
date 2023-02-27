@@ -1,7 +1,7 @@
 import { DataGridProps, Select, Button,  Dialog,
   DialogTrigger,
   DialogSurface, 
-  DataGrid, TableColumnDefinition, createTableColumn, DataGridHeader, DataGridBody, DataGridRow, DataGridHeaderCell,DataGridCell} from '@fluentui/react-components';
+  DataGrid, TableColumnDefinition, createTableColumn, DataGridHeader, DataGridBody, DataGridRow, DataGridHeaderCell,DataGridCell, Text} from '@fluentui/react-components';
 import React from 'react'
 import { useRequestAPIHooks } from '../api/requestAPIHooks';
 import { useConstantsHooks } from '../app/useConstantsHooks';
@@ -38,11 +38,11 @@ const ListIncidentPage : React.FC = () =>  {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const generateOption = (listMap : Map<number,string>) => Array.from(listMap, ([key, value]) => ({key,value})).map(x => (<option value={x.key}>{x.value}</option>))
+  const generateOption = (listMap : Map<number,string>) => Array.from(listMap, ([key, value]) => ({key,value})).map(x => (<option key={x.key} value={x.key}>{x.value}</option>))
 
 
   const columns: TableColumnDefinition<Item>[] = [ 
-    createTableColumn<Item>({columnId: 'Id', renderHeaderCell: () => ('Incident'), renderCell: (item)=> (<text className='listItemId'>{item.Id}</text>), compare:(a,b)=>(a.Id-b.Id)}),
+    createTableColumn<Item>({columnId: 'Id', renderHeaderCell: () => ('Incident'), renderCell: (item)=> (<Text className='listItemId'>{item.Id}</Text>), compare:(a,b)=>(a.Id-b.Id)}),
     createTableColumn<Item>({columnId: 'IncidentDate', renderHeaderCell: () => ('Incident Date'), renderCell: (item)=> (item.IncidentDate)}),
     createTableColumn<Item>({columnId: 'PersonInvolved', renderHeaderCell: () => ('Person Involved'), renderCell: (item)=> (item.PersonInvolved)}),
     createTableColumn<Item>({columnId: 'IncidentType', renderHeaderCell: () => ('Incident Type'), renderCell: (item)=> (incidentType.get(item.IncidentType))}),
@@ -73,20 +73,20 @@ const ListIncidentPage : React.FC = () =>  {
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-sm12 ms-ms6 ms-lg2">
             <Select defaultValue="All Status" appearance="outline"  >
-              <option value="" >All Status</option>
+              <option >All Status</option>
               {incidentStatus && generateOption(incidentStatus)}
             </Select>
             </div>
             <div className="ms-Grid-col ms-sm12 ms-ms6 ms-lg2">
               <Select defaultValue="All Incident Type">
-                <option value="">All Incident Type</option>
+                <option >All Incident Type</option>
                 {incidentType && generateOption(incidentType)}
               </Select>
             </div>
           </div>
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-sm12 ms-lg12">
-              <DataGrid items={items} columns={columns} sortable onSortChange={onSortChange} sortState={sortState} >
+              <DataGrid items={items} columns={columns} sortable onSortChange={onSortChange} sortState={sortState}>
                 <DataGridHeader>
                   <DataGridRow>
                     {({ renderHeaderCell }) => (

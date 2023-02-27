@@ -3,6 +3,11 @@ import { Route,Routes } from 'react-router-dom';
 import ErrorPage from './app/ErrorPage';
 import ListIncidentPage from './incidents/ListIncidentPage';
 
+export const navigateHome = () => {
+    window.location.href = '/';
+}
+
+
 const RoutesApp: React.FC = () => {
     return ( <Routes >
                 <Route  path='/' element={<ListIncidentPage/>} />
