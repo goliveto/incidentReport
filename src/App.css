@@ -1,0 +1,25 @@
+.App {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display:'grid';
+}
+
+.ms-Grid-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sectionText{
+  text-decoration: underline rgb(0, 0, 0);
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+
+.listItemId{
+  color: red;
+}
