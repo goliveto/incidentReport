@@ -1,8 +1,7 @@
 import React from 'react'
 import { DialogContent,DialogActions, DialogTrigger, Button, DialogBody, DialogTitle } from '@fluentui/react-components'
 import { Formik, Form, FormikProps } from 'formik'
-import CreateIncidentFields from './CreateIncidentFields';
-import * as Yup from 'yup';
+import IncidentFields from './IncidentFields';
 import { registerIncidentSchema } from './validationSchema';
 import { useRequestAPIHooks } from '../api/requestAPIHooks';
 import { navigateHome } from '../RoutesApp';
@@ -51,7 +50,6 @@ const CreateIncidentPage: React.FC = () => {
       .then(ret=>{console.log('Create incident Succesfull'+ JSON.stringify(ret)); navigateHome();} )
       .catch(err => (console.log('Was an error to register an incident'+ JSON.stringify(err))) );
   }
-
   
   return ( 
       <Formik<RegisterIncident>
@@ -65,7 +63,7 @@ const CreateIncidentPage: React.FC = () => {
               <DialogBody>
                 <DialogTitle>Report New Incident</DialogTitle>
                 <DialogContent>
-                  <CreateIncidentFields />
+                  <IncidentFields />
                 </DialogContent>
                 <DialogActions>
                   <DialogTrigger disableButtonEnhancement>

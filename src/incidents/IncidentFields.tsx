@@ -14,7 +14,7 @@ const labelAboveField = makeStyles({
     },
   });
 
-const CreateIncidentFields: React.FC = () => {
+const IncidentFields: React.FC = () => {
     const styles = labelAboveField();
     const { values, errors, touched } = useFormikContext<RegisterIncident>()
 
@@ -131,4 +131,4 @@ const CreateIncidentFields: React.FC = () => {
 };
 
 
-export default CreateIncidentFields;
+export default IncidentFields;
